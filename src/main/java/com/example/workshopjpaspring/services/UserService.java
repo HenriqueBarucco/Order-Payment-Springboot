@@ -2,6 +2,7 @@ package com.example.workshopjpaspring.services;
 
 import com.example.workshopjpaspring.entities.User;
 import com.example.workshopjpaspring.repositories.UserRepository;
+import com.example.workshopjpaspring.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj) {
